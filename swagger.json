@@ -359,7 +359,7 @@
         "tags": [
           "users"
         ],
-        "summary": "Get all orders of a specific user",
+        "summary": "Get all orders for specific user",
         "description": "Get all Orders of a specific user",
         "operationId": "getOrdersOfUser",
         "parameters": [
@@ -419,7 +419,13 @@
           "type": "integer"
         },
         "orderstatus": {
-          "type": "string"
+          "type": "string",
+          "enum": [
+            "in Bearbeitung",
+            "Versendet",
+            "Zugestellt",
+            "Zurückgesendet"
+          ]
         },
         "orderdate": {
           "type": "string"
