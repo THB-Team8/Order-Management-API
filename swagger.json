@@ -62,7 +62,7 @@
             "in": "path",
             "description": "Id of user that cart needs to be returned",
             "required": true,
-            "type": "integer"
+            "type": "string"
           }
         ],
         "responses": {
@@ -90,7 +90,7 @@
             "in": "path",
             "description": "id of user that is needed to update its cart",
             "required": true,
-            "type": "integer"
+            "type": "string"
           },
           {
             "in": "body",
@@ -133,7 +133,7 @@
             "in": "path",
             "description": "Id of user that is needed to create its cart",
             "required": true,
-            "type": "integer"
+            "type": "string"
           },
           {
             "in": "body",
@@ -170,7 +170,7 @@
             "in": "path",
             "description": "Id of user that is needed to delete its cart",
             "required": true,
-            "type": "integer"
+            "type": "string"
           },
           {
             "in": "body",
@@ -238,7 +238,41 @@
             "description": "Order that needs to be created",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Orders"
+              "type": "object",
+              "properties": {
+                "userid": {
+                  "type": "string"
+                },
+                "orderstatus": {
+                  "type": "string",
+                  "enum": [
+                    "in Bearbeitung",
+                    "Versendet",
+                    "Zugestellt",
+                    "Zurückgesendet"
+                  ]
+                },
+                "orderdate": {
+                  "type": "string"
+                },
+                "content": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "productid": {
+                        "type": "integer"
+                      },
+                      "productquantity": {
+                        "type": "number"
+                      },
+                      "productprice": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                }
+              }
             }
           }
         ],
@@ -266,7 +300,7 @@
             "in": "path",
             "description": "id of order to return",
             "required": true,
-            "type": "integer"
+            "type": "string"
           }
         ],
         "responses": {
@@ -294,7 +328,27 @@
             "in": "path",
             "description": "id of order to delete",
             "required": true,
-            "type": "integer"
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Order that needs to be deleted",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userid": {
+                  "type": "string"
+                },
+                "orderstatus": {
+                  "type": "string",
+                  "enum": [
+                    "in Bearbeitung"
+                  ]
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -327,7 +381,7 @@
             "in": "path",
             "description": "orderstatus to update",
             "required": true,
-            "type": "integer"
+            "type": "string"
           },
           {
             "in": "body",
@@ -368,7 +422,7 @@
             "in": "path",
             "description": "id of user to return his orders",
             "required": true,
-            "type": "integer"
+            "type": "string"
           }
         ],
         "responses": {
@@ -386,6 +440,9 @@
     "Carts": {
       "type": "object",
       "properties": {
+        "userid": {
+          "type": "string"
+        },
         "content": {
           "type": "array",
           "items": {
@@ -413,10 +470,10 @@
       "type": "object",
       "properties": {
         "orderid": {
-          "type": "integer"
+          "type": "string"
         },
         "userid": {
-          "type": "integer"
+          "type": "string"
         },
         "orderstatus": {
           "type": "string",
@@ -455,7 +512,7 @@
       "xml": {
         "name": "Orders"
       }
-    }	
+    }
   },
   "externalDocs": {
     "description": "GitHub Repository of API",
