@@ -440,9 +440,6 @@
     "Carts": {
       "type": "object",
       "properties": {
-        "userid": {
-          "type": "string"
-        },
         "content": {
           "type": "array",
           "items": {
