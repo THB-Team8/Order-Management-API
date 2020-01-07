@@ -5,8 +5,8 @@
     "version": "1.0.0",
     "title": "Order Management"
   },
-  "host": "orderservice.404.mn",
-  "basePath": "/api/v1/",
+  "host": "localhost:3000",
+  "basePath": "/v1/",
   "tags": [
     {
       "name": "carts",

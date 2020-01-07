@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const mysql = require('mysql');
+const uuidv4 = require('uuid/v4');
 require('dotenv').config();
 
 // Parser for JSON
@@ -21,7 +22,43 @@ var pool  = mysql.createPool({
     database : process.env.SQL_DATABASE
 });
 
-// Return all Users
+// Return all Carts
+app.get('/v1/carts',(request, response) => {
+  let sql = "SELECT * FROM carts";
+  let query = pool.query(sql, (error, results) => {
+    //Somethings wrong interally
+    if(error) return sendResponse(response, 500, error, null);
+    // All good
+    sendResponse(response, 200, null, results);
+  });
+});
+
+// Return specific Carts
+app.get('/v1/carts/:userid',(request, response) => {
+  let sql = "SELECT * FROM carts WHERE userid="+request.params.userid;
+  let query = pool.query(sql, (error, results) => {
+    //Somethings wrong interally
+    if(error) return sendResponse(response, 500, error, null);
+    // All good
+    sendResponse(response, 200, null, results);
+  });
+});
+
+// Update specific User
+app.put('/v1/carts/:userid',(request, response) => {
+  let data = request.body;
+  let sql = "UPDATE carts SET ? WHERE cartid="+request.params.cartid;
+  let query = pool.query(sql, data,(error, results) => {
+    // Missing or wrong attributes used
+    if(error) return sendResponse(response, 400, error.sqlMessage, null);
+    // Id is unkown and no changes were made
+    if(results.affectedRows < 1) return sendResponse(response, 404, "Cart not found.", null);
+    // All good
+    sendResponse(response, 200, null, results.message);
+  });
+});
+
+// Return all Orders
 app.get('/v1/orders',(request, response) => {
   let sql = "SELECT * FROM orders";
   let query = pool.query(sql, (error, results) => {
@@ -32,9 +69,9 @@ app.get('/v1/orders',(request, response) => {
   });
 });
 
-// Return specific User
-app.get('/v1/users/:id',(request, response) => {
-  let sql = "SELECT * FROM userdata WHERE id="+request.params.id;
+// Return specific Order
+app.get('/v1/orders/:orderid',(request, response) => {
+  let sql = "SELECT * FROM userdata WHERE orderid="+request.params.orderid;
   let query = pool.query(sql, (error, results) => {
     //Somethings wrong interally
     if(error) return sendResponse(response, 500, error, null);
@@ -45,13 +82,15 @@ app.get('/v1/users/:id',(request, response) => {
   });
 });
 
-// Create new User
-app.post('/v1/users',(request, response) => {
+// Create new Order
+app.post('/v1/orders',(request, response) => {
   let data = request.body;
-  let sql = "INSERT INTO userdata SET ?";
+  data.orderid = uuidv4();
+  data.content = JSON.stringify(data.content[0]);
+  let sql = "INSERT INTO orders SET ?";
   let query = pool.query(sql, data,(error, results) => {
     // Missing or wrong attributes used
-    if(error) return sendResponse(response, 400, error.sqlMessage, null);
+    if(error) return sendResponse(response, 400, error, null);
     // All good
     sendResponse(response, 200, null, results);
   });
