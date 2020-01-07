@@ -455,9 +455,7 @@
       "xml": {
         "name": "Orders"
       }
-    }
-			for (var i = 0; i < addToCartButtons.length; i++)
-	
+    }	
   },
   "externalDocs": {
     "description": "GitHub Repository of API",
