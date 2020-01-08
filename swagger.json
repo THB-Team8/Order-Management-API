@@ -252,9 +252,6 @@
                     "Zurückgesendet"
                   ]
                 },
-                "orderdate": {
-                  "type": "string"
-                },
                 "content": {
                   "type": "array",
                   "items": {

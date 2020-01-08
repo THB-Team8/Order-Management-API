@@ -100,7 +100,7 @@ app.get('/v1/orders',(request, response) => {
 
 // Return specific Order
 app.get('/v1/orders/:orderid',(request, response) => {
-  let sql = "SELECT * FROM userdata WHERE orderid="+request.params.orderid;
+  let sql = "SELECT * FROM orders WHERE orderid='"+request.params.orderid+"'";
   let query = pool.query(sql, (error, results) => {
     //Somethings wrong interally
     if(error) return sendResponse(response, 500, error, null);
@@ -114,6 +114,7 @@ app.get('/v1/orders/:orderid',(request, response) => {
 // Create new Order
 app.post('/v1/orders',(request, response) => {
   let data = request.body;
+  console.log(data);
   data.orderid = uuidv4();
   data.content = JSON.stringify(data.content[0]);
   let sql = "INSERT INTO orders SET ?";
