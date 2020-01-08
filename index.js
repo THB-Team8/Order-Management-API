@@ -114,7 +114,6 @@ app.get('/v1/orders/:orderid',(request, response) => {
 // Create new Order
 app.post('/v1/orders',(request, response) => {
   let data = request.body;
-  console.log(data);
   data.orderid = uuidv4();
   data.content = JSON.stringify(data.content[0]);
   let sql = "INSERT INTO orders SET ?";
@@ -126,10 +125,10 @@ app.post('/v1/orders',(request, response) => {
   });
 });
 
-// Update specific User
-app.put('/v1/users/:id',(request, response) => {
+// Update orderstatus
+app.put('/v1/orders/:orderid/orderstatus',(request, response) => {
   let data = request.body;
-  let sql = "UPDATE userdata SET ? where id="+request.params.id;
+  let sql = "UPDATE orders SET ? where orderid='"+request.params.orderid+"'";
   let query = pool.query(sql, data,(error, results) => {
     // Missing or wrong attributes used
     if(error) return sendResponse(response, 400, error.sqlMessage, null);

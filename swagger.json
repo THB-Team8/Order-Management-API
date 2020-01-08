@@ -261,7 +261,7 @@
                         "type": "integer"
                       },
                       "productquantity": {
-                        "type": "number"
+                        "type": "integer"
                       },
                       "productprice": {
                         "type": "number"
@@ -391,7 +391,8 @@
                 "Versendet",
                 "Zugestellt",
                 "Zurückgesendet"
-              ]
+              ],
+              "example": "{\"orderstatus\": \"in Bearbeitung\"}"
             }
           }
         ],
