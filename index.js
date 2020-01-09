@@ -135,18 +135,31 @@ app.put('/v1/orders/:orderid/orderstatus',(request, response) => {
     // Id is unkown and no changes were made
     if(results.affectedRows < 1) return sendResponse(response, 404, "User not found.", null);
     // All good
-    sendResponse(response, 200, null, results.message);
+    sendResponse(response, 200, null, {'Neuer Orderstatus: "':data.orderstatus+'"'});
   });
 });
 
 // Delete specific User
-app.delete('/v1/users/:id',(request, response) => {
-  let sql = "DELETE FROM userdata WHERE id="+request.params.id+"";
+app.delete('/v1/orders/:orderid',(request, response) => {
+  let sql = "DELETE FROM orders WHERE orderid="+request.params.orderid+"";
   let query = pool.query(sql, (error, results) => {
     //Somethings wrong interally
     if(error) return sendResponse(response, 500, error.sqlMessage, null);
     // Id is unkown and no changes were made
     if(results.affectedRows < 1) return sendResponse(response, 404, "User not found.", null);
+    // All good
+    sendResponse(response, 200, null, results);
+  });
+});
+
+// Return all Orders of specific User
+app.get('/v1/users/:userid/orders',(request, response) => {
+  let sql = "SELECT * FROM orders WHERE userid='"+request.params.userid+"'";
+  let query = pool.query(sql, (error, results) => {
+    //Somethings wrong interally
+    if(error) return sendResponse(response, 500, error, null);
+    // Id is unkown and no changes were made
+    if(results.length < 1) return sendResponse(response, 404, "Not found.", null);
     // All good
     sendResponse(response, 200, null, results);
   });
