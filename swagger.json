@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "title": "Order Management"
   },
-  "host": "localhost:3000",
+  "host": "orderservice.biz.tm:3000",
   "basePath": "/v1/",
   "tags": [
     {
