@@ -336,9 +336,6 @@
             "schema": {
               "type": "object",
               "properties": {
-                "userid": {
-                  "type": "string"
-                },
                 "orderstatus": {
                   "type": "string",
                   "enum": [

@@ -139,16 +139,16 @@ app.put('/v1/orders/:orderid/orderstatus',(request, response) => {
   });
 });
 
-// Delete specific User
+// Delete specific Order
 app.delete('/v1/orders/:orderid',(request, response) => {
-  let sql = "DELETE FROM orders WHERE orderid="+request.params.orderid+"";
+  let sql = "DELETE FROM orders WHERE orderid='"+request.params.orderid+"'";
   let query = pool.query(sql, (error, results) => {
     //Somethings wrong interally
     if(error) return sendResponse(response, 500, error.sqlMessage, null);
     // Id is unkown and no changes were made
     if(results.affectedRows < 1) return sendResponse(response, 404, "User not found.", null);
     // All good
-    sendResponse(response, 200, null, results);
+    sendResponse(response, 200, null, {'Gelöschte Order: "':request.params.orderid+'"'});
   });
 });
 
